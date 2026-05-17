@@ -6,6 +6,7 @@ import com.microsoft.playwright.Page;
 
 import lombok.RequiredArgsConstructor;
 import ruslan.simakov.naval.config.ActivityConfig;
+import ruslan.simakov.naval.config.NavalProperties;
 import ruslan.simakov.naval.model.BookingResult;
 
 @Component("TENNIS")
@@ -13,11 +14,14 @@ import ruslan.simakov.naval.model.BookingResult;
 public class TennisBookingStrategy implements BookingStrategy {
 
     private final NavalPage navalPage;
+    private final NavalProperties navalProperties;
 
     @Override
     public BookingResult execute(BrowserSession session, ActivityConfig config) {
 
         Page page = session.page();
+
+        page.navigate(navalProperties.url());
 
         navalPage.loginIfNeeded(page, config.username(), config.password());
 

@@ -17,15 +17,15 @@ public class BookingService {
     
     private final BookingEngine bookingEngine;
     private final NavalProperties navalProperties;
+    private final ActivityConfig activityConfig;
 
     public void bookActivities() {
 
-        List<ActivityConfig> activities = navalProperties.activities();
+        List<ActivityConfig> activities = activityConfig.activities();
 
         for (ActivityConfig activity : activities) {
             try {
-                ActivityConfig activityWithDefaults = applyDefaults(activity);
-                BookingResult result = bookingEngine.book(activityWithDefaults);
+                BookingResult result = bookingEngine.book(activity);
                 log.info("Booked: {} -> {}", activity.name(), result.status());
 
             } catch (Exception e) {
