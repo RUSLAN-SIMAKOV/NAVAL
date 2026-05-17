@@ -52,7 +52,7 @@ public class NavalPage {
         slots.first().click();
         page.click("text=Confirm");
 
-        page.waitForTimeout(1000);
+        page.waitForTimeout(5000);
 
         return page.locator("text=Success").count() > 0;
     }
