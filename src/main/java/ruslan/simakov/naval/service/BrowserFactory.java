@@ -2,6 +2,8 @@ package ruslan.simakov.naval.service;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
@@ -18,9 +20,12 @@ public class BrowserFactory {
         Browser browser = playwright.chromium().launch(
             new BrowserType.LaunchOptions()
                 .setHeadless(false)
+                .setArgs(List.of("--start-maximized"))
         );
 
-        BrowserContext context = browser.newContext();
+        BrowserContext context = browser.newContext(
+            new Browser.NewContextOptions().setViewportSize(null)
+        );
 
         Page page = context.newPage();
         page.setDefaultTimeout(30000);
