@@ -23,7 +23,7 @@ public class BrowserFactory {
         BrowserContext context = browser.newContext();
 
         Page page = context.newPage();
-        page.setDefaultTimeout(5000);
+        page.setDefaultTimeout(30000);
 
         return new BrowserSession(playwright, browser, context, page);
     }
