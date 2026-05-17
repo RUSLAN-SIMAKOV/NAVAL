@@ -27,7 +27,7 @@ public class NavalPage {
                 page.click(".account_button");
             }
 
-            page.waitForURL("**/Portal/");
+            page.waitForURL("**/Portal/**");
         }
     }
 

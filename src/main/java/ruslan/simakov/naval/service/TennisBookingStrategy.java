@@ -20,16 +20,13 @@ public class TennisBookingStrategy implements BookingStrategy {
     public BookingResult execute(BrowserSession session, String username, String password, ActivityConfig config) {
 
         Page page = session.page();
-
         page.navigate(navalProperties.url());
 
         navalPage.loginIfNeeded(page, username, password);
-
+        navalPage.selectDate(page, config.preferredDate());
         navalPage.openActivities(page);
-
         navalPage.selectActivity(page, "Tennis");
 
-        navalPage.selectDate(page, config.preferredDate());
 
         boolean success = navalPage.tryBookFirstAvailableSlot(page);
 
