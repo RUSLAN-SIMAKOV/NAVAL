@@ -39,23 +39,36 @@ public class NavalPage {
     public void selectDate(Page page, String date) {
         String dataDay = date.replace("-", "");
         page.click("div[data-day='" + dataDay + "']");
+        page.waitForLoadState();
+        page.waitForTimeout(2000);
     }
 
     public boolean tryBookActivity(Page page, String activityName) {
 
-        Locator block = page.locator(".row").filter(new Locator.FilterOptions().setHasText(activityName));
-        Locator button = block.locator("a:has-text('Marcar')");
+        // Use a more robust wait that specifically targets visible activity blocks
+        Locator visibleBlocks = page.locator(".chekin-aula:visible")
+                .filter(new Locator.FilterOptions().setHasText(activityName));
 
-        if (button.isVisible()) {
-            button.click();
-            
-            if (page.locator("text=Confirm").isVisible()) {
-                page.click("text=Confirm");
+        visibleBlocks.first().waitFor();
+
+        Locator block = visibleBlocks.first();
+
+        if (block.count() > 0) {
+            Locator button = block.locator("a.btn-user-checkin-cancheckin:has-text('Marcar')");
+
+            if (button.count() > 0) {
+                button.click();
+
+                // Wait for any potential confirmation dialog
+                page.waitForTimeout(2000);
+
+                Locator confirm = page.locator("text=Confirmar, text=Confirm, text=Sim, text=Yes, .btn-primary:has-text('Marcar')");
+                if (confirm.first().isVisible()) {
+                    confirm.first().click();
+                }
+
+                return true;
             }
-
-            page.waitForTimeout(5000);
-
-            return true;
         }
 
         return false;
