@@ -80,9 +80,15 @@ public class NavalPage {
                 .first();
 
         if (block.count() > 0) {
+            // Check for specific timer button classes as seen in the HTML
+            Locator timerButton = block.locator(".checkin-buttonsarea a.btn-danger, .checkin-buttonsarea a.disable-anchor");
+            if (timerButton.count() > 0) {
+                return true;
+            }
+
             String text = block.locator(".checkin-buttonsarea").innerText();
-            // Timer pattern like 00:00:00 or 00:00. Exclude "Marcar" which has "Lot: X/Y"
-            return text.matches("(?s).*\\d{1,2}:\\d{2}(:\\d{2})?.*") && !text.contains("Marcar");
+            // Timer pattern like 00:00:00:00, 00:00:00 or 00:00. Exclude "Marcar" which has "Lot: X/Y"
+            return text.matches("(?s).*\\d{1,2}:\\d{2}(:\\d{2}){0,3}.*") && !text.contains("Marcar");
         }
         return false;
     }
