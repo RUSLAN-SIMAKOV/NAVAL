@@ -10,13 +10,24 @@ public class NavalPage {
 
     public void loginIfNeeded(Page page, String user, String pass) {
 
-        if (page.url().contains("login")) {
+        if (page.locator(".activity_catalog_buy").isVisible()) {
+            page.click(".activity_catalog_buy");
+        }
 
-            page.fill("#email", user);
-            page.fill("#password", pass);
-            page.click("button[type='submit']");
+        if (page.url().contains("Login")) {
 
-            page.waitForURL("**/dashboard");
+            page.fill("#Email", user);
+            page.click("text=Prosseguir");
+
+            page.fill("#Password", pass);
+            
+            if (page.locator("button[type='submit']:not([name='provider'])").isVisible()) {
+                page.click("button[type='submit']:not([name='provider'])");
+            } else {
+                page.click(".account_button");
+            }
+
+            page.waitForURL("**/Portal/");
         }
     }
 
