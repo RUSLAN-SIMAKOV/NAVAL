@@ -27,15 +27,15 @@ public class TennisBookingStrategy implements BookingStrategy {
         for (int i = 0; i < 1000; i++) {
             navalPage.selectDate(page, config.preferredDate());
 
-            if (navalPage.tryBookActivity(page, config.name())) {
-                return BookingResult.successful();
-            }
-
             if (navalPage.isTimerPresent(page, config.name())) {
                 page.waitForTimeout(1000);
                 page.reload();
                 navalPage.loginIfNeeded(page, username, password);
                 continue;
+            }
+
+            if (navalPage.tryBookActivity(page, config.name())) {
+                return BookingResult.successful();
             }
 
             break;
