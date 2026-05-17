@@ -40,7 +40,8 @@ public class NavalPage {
     }
 
     public void selectDate(Page page, String date) {
-        page.click("[data-date='" + date + "']");
+        String dataDay = date.replace("-", "");
+        page.click("div[data-day='" + dataDay + "']");
     }
 
     public boolean tryBookFirstAvailableSlot(Page page) {
