@@ -23,12 +23,24 @@ public class TennisBookingStrategy implements BookingStrategy {
         page.navigate(navalProperties.url());
 
         navalPage.loginIfNeeded(page, username, password);
-        navalPage.selectDate(page, config.preferredDate());
 
-        boolean success = navalPage.tryBookActivity(page, config.name());
+        for (int i = 0; i < 1000; i++) {
+            navalPage.selectDate(page, config.preferredDate());
 
-        return success
-            ? BookingResult.successful()
-            : BookingResult.failed("No slots available");
+            if (navalPage.tryBookActivity(page, config.name())) {
+                return BookingResult.successful();
+            }
+
+            if (navalPage.isTimerPresent(page, config.name())) {
+                page.waitForTimeout(1000);
+                page.reload();
+                navalPage.loginIfNeeded(page, username, password);
+                continue;
+            }
+
+            break;
+        }
+
+        return BookingResult.failed("No slots available");
     }
 }

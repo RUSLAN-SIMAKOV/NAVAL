@@ -73,4 +73,17 @@ public class NavalPage {
 
         return false;
     }
+
+    public boolean isTimerPresent(Page page, String activityName) {
+        Locator block = page.locator(".chekin-aula:visible")
+                .filter(new Locator.FilterOptions().setHasText(activityName))
+                .first();
+
+        if (block.count() > 0) {
+            String text = block.locator(".checkin-buttonsarea").innerText();
+            // Timer pattern like 00:00:00 or 00:00. Exclude "Marcar" which has "Lot: X/Y"
+            return text.matches("(?s).*\\d{1,2}:\\d{2}(:\\d{2})?.*") && !text.contains("Marcar");
+        }
+        return false;
+    }
 }
