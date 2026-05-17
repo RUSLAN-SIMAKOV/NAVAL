@@ -14,7 +14,7 @@ public class NavalScheduler {
 
     private final BookingService bookingService;
 
-    @Scheduled(cron = "0 0 7 * * *")
+    @Scheduled(cron = "0 * * * * *")
     public void runMorningBooking() {
         bookingService.bookActivities();
     }

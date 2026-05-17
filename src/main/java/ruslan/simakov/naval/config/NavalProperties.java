@@ -9,11 +9,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public record NavalProperties(
     String username,
     String password,
-    List<ActivityConfig> activities
-) {
-    public NavalProperties {
-        if (activities == null) {
-            activities = new ArrayList<>();
-        }
-    }
+    List<ActivityConfig> activities) {
 }
