@@ -21,13 +21,10 @@ public class NavalPage {
 
             page.fill("#Password", pass);
             
-            if (page.locator("button[type='submit']:not([name='provider'])").isVisible()) {
-                page.click("button[type='submit']:not([name='provider'])");
-            } else {
-                page.click(".account_button");
-            }
+            page.click("button[type='submit']:not([name='provider']), .account_button");
 
             page.waitForURL("**/Portal/**");
+            page.waitForLoadState();
         }
     }
 
@@ -44,17 +41,23 @@ public class NavalPage {
         page.click("div[data-day='" + dataDay + "']");
     }
 
-    public boolean tryBookFirstAvailableSlot(Page page) {
+    public boolean tryBookActivity(Page page, String activityName) {
 
-        Locator slots = page.locator(".slot.available");
+        Locator block = page.locator(".row").filter(new Locator.FilterOptions().setHasText(activityName));
+        Locator button = block.locator("a:has-text('Marcar')");
 
-        if (slots.count() == 0) return false;
+        if (button.isVisible()) {
+            button.click();
+            
+            if (page.locator("text=Confirm").isVisible()) {
+                page.click("text=Confirm");
+            }
 
-        slots.first().click();
-        page.click("text=Confirm");
+            page.waitForTimeout(5000);
 
-        page.waitForTimeout(5000);
+            return true;
+        }
 
-        return page.locator("text=Success").count() > 0;
+        return false;
     }
 }

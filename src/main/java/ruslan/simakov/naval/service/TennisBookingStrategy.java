@@ -24,11 +24,8 @@ public class TennisBookingStrategy implements BookingStrategy {
 
         navalPage.loginIfNeeded(page, username, password);
         navalPage.selectDate(page, config.preferredDate());
-        navalPage.openActivities(page);
-        navalPage.selectActivity(page, "Tennis");
 
-
-        boolean success = navalPage.tryBookFirstAvailableSlot(page);
+        boolean success = navalPage.tryBookActivity(page, config.name());
 
         return success
             ? BookingResult.successful()
