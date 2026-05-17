@@ -9,5 +9,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public record NavalProperties(
     String url,
     String username,
-    String password) {
+    String password,
+    List<ActivityConfig> activities) {
 }

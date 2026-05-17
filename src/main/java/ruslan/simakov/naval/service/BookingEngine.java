@@ -15,7 +15,7 @@ public class BookingEngine {
     private final BrowserFactory browserFactory;
     private final Map<String, BookingStrategy> strategies;
 
-    public BookingResult book(ActivityConfig config) {
+    public BookingResult book(String username, String password, ActivityConfig config) {
 
         BookingStrategy strategy = strategies.get(config.type());
 
@@ -24,7 +24,7 @@ public class BookingEngine {
         }
 
         try (BrowserSession session = browserFactory.create()) {
-            return strategy.execute(session, config);
+            return strategy.execute(session, username, password, config);
         }
     }
 }

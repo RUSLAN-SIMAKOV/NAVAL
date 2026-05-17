@@ -5,5 +5,5 @@ import ruslan.simakov.naval.model.BookingResult;
 
 public interface BookingStrategy {
 
-    BookingResult execute(BrowserSession session, ActivityConfig config);
+    BookingResult execute(BrowserSession session, String username, String password, ActivityConfig config);
 }

@@ -17,32 +17,23 @@ public class BookingService {
     
     private final BookingEngine bookingEngine;
     private final NavalProperties navalProperties;
-    private final ActivityConfig activityConfig;
 
     public void bookActivities() {
 
-        List<ActivityConfig> activities = activityConfig.activities();
+        List<ActivityConfig> activities = navalProperties.activities();
 
         for (ActivityConfig activity : activities) {
             try {
-                BookingResult result = bookingEngine.book(activity);
+                BookingResult result = bookingEngine.book(
+                    navalProperties.username(),
+                    navalProperties.password(),
+                    activity
+                );
                 log.info("Booked: {} -> {}", activity.name(), result.status());
 
             } catch (Exception e) {
                 log.error("Failed: {} -> {}", activity.name(), e.getMessage());
             }
         }
-    }
-
-    private ActivityConfig applyDefaults(ActivityConfig activity) {
-        String user = activity.username() != null ? activity.username() : navalProperties.username();
-        String pass = activity.password() != null ? activity.password() : navalProperties.password();
-        return new ActivityConfig(
-            activity.type(),
-            activity.name(),
-            user,
-            pass,
-            activity.preferredDate()
-        );
     }
 }

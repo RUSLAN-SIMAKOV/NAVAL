@@ -17,13 +17,13 @@ public class TennisBookingStrategy implements BookingStrategy {
     private final NavalProperties navalProperties;
 
     @Override
-    public BookingResult execute(BrowserSession session, ActivityConfig config) {
+    public BookingResult execute(BrowserSession session, String username, String password, ActivityConfig config) {
 
         Page page = session.page();
 
         page.navigate(navalProperties.url());
 
-        navalPage.loginIfNeeded(page, config.username(), config.password());
+        navalPage.loginIfNeeded(page, username, password);
 
         navalPage.openActivities(page);
 
