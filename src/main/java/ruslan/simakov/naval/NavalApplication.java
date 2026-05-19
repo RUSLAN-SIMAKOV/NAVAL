@@ -10,8 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @ConfigurationPropertiesScan
 public class NavalApplication {
 
-    static void main(String[] args) {
+    public static void main(String[] args) {
         SpringApplication.run(NavalApplication.class, args);
     }
-
 }
