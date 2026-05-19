@@ -19,7 +19,7 @@ public class BrowserFactory {
 
         Browser browser = playwright.chromium().launch(
             new BrowserType.LaunchOptions()
-                .setHeadless(false)
+                .setHeadless(true)
                 .setArgs(List.of("--start-maximized"))
         );
 
