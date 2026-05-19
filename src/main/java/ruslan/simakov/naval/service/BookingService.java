@@ -30,6 +30,7 @@ public class BookingService {
                     activity
                 );
                 log.info("Booked: {} -> {}", activity.name(), result.status());
+                System.exit(0);
 
             } catch (Exception e) {
                 log.error("Failed: {} -> {}", activity.name(), e.getMessage());
